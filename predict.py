@@ -3,16 +3,19 @@
 NEU-DET 推理测试：用训练好的 best.pt 检测图片
 在 (cv) 环境下运行：python predict.py
 """
-
-from ultralytics import YOLO
 from pathlib import Path
 
+from ultralytics import YOLO
+
+# 项目根目录 = 本文件所在目录，换电脑 / 换盘符无需改代码
+ROOT = Path(__file__).resolve().parent
+
 # ── 配置区 ──────────────────────────────────────────
-WEIGHTS = r"D:\2026\python project\yolo_train\runs\yolov8n_neu_det\weights\best.pt"
+WEIGHTS = ROOT / "runs" / "yolov8n_neu_det" / "weights" / "best.pt"
 
 # 要检测的图片来源，两种方式二选一：
-SOURCE = r"D:\2026\python project\yolo_train\dataset\NEU-DET\train\images"  # 整个文件夹
-# SOURCE = r"某张图片的完整路径.jpg"                                        # 单张图片
+SOURCE = ROOT / "dataset" / "NEU-DET" / "train" / "images"   # 整个文件夹
+# SOURCE = ROOT / "some_image.jpg"                            # 单张图片
 # ────────────────────────────────────────────────────
 
 # 类别英文 → 中文对照，打印结果时更好读
@@ -27,11 +30,11 @@ CLASS_CN = {
 
 
 def main():
-    model = YOLO(WEIGHTS)
+    model = YOLO(str(WEIGHTS))
 
     # stream=True 逐张处理，避免大批量图片占内存
     results = model.predict(
-        source=SOURCE,
+        source=str(SOURCE),
         conf=0.25,        # 置信度阈值，低于它的框不显示
         save=True,        # 保存画好框的结果图
         device=0,         # 用 GPU
@@ -39,7 +42,9 @@ def main():
 
     print("=" * 50)
     total = 0
+    save_dir = None
     for r in results:
+        save_dir = r.save_dir
         img_name = Path(r.path).name
         boxes = r.boxes
         total += len(boxes)
@@ -50,7 +55,8 @@ def main():
             print(f"{img_name}: 检测到 {len(boxes)} 个缺陷 -> {', '.join(names)}")
     print("=" * 50)
     print(f"共检测出 {total} 个缺陷实例")
-    print(f"结果图已保存到: {Path(r.save_dir)}")
+    if save_dir:
+        print(f"结果图已保存到: {save_dir}")
 
 
 if __name__ == "__main__":   # Windows 多进程保护，和 train.py 同理

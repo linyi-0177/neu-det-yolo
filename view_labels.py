@@ -1,16 +1,24 @@
 """
 NEU-DET 原始标签可视化（简化版，命令行友好）
 - 无窗口弹窗，只保存图
-- 每类抽 1 张 + 再随机抽 4 张，共 10 张
-- 输出到 D:\2026\python project\yolo_train\labels_view\
+- 每类抽 1 张 + 再随机抽 4 张
+- 输出到项目根目录下的 labels_view/
+
+用途有两层：
+1. 直观查看标注质量（框是否贴合缺陷区域）
+2. 间接校验标注完整性 —— 标注文件缺失的图片画出来会是空白，一眼能看出问题
 """
 import random
 from pathlib import Path
+
 import cv2
 
-IMG_DIR = Path(r"D:\2026\python project\yolo_train\dataset\NEU-DET\train\images")
-LBL_DIR = Path(r"D:\2026\python project\yolo_train\dataset\NEU-DET\train\labels")
-OUT_DIR = Path(r"D:\2026\python project\yolo_train\labels_view")
+# 项目根目录 = 本文件所在目录，换电脑 / 换盘符无需改代码
+ROOT = Path(__file__).resolve().parent
+
+IMG_DIR = ROOT / "dataset" / "NEU-DET" / "train" / "images"
+LBL_DIR = ROOT / "dataset" / "NEU-DET" / "train" / "labels"
+OUT_DIR = ROOT / "labels_view"
 OUT_DIR.mkdir(exist_ok=True)
 
 COLORS = {
@@ -64,7 +72,9 @@ if __name__ == "__main__":
     for p in samples:
         c = view_one(p)
         total += c
-        print(f"  {p.name}: {c} 个标注框")
+        # 框数为 0 说明该图没有标注文件（或标注为空），是数据问题的信号
+        flag = "  <-- 无标注，建议检查" if c == 0 else ""
+        print(f"  {p.name}: {c} 个标注框{flag}")
 
     print(f"\n完成，共画 {total} 个标注框")
     print(f"结果目录: {OUT_DIR}")

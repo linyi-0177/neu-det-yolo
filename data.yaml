@@ -1,7 +1,8 @@
 # NEU-DET 数据集配置
-# 路径相对于 yaml 所在目录
+# path 为相对路径，按「当前工作目录」解析，所以请从项目根目录运行脚本
+# （train.py 内部已自动切换到项目根目录，无需手动处理）
 
-path: D:\2026\python project\yolo_train\dataset\NEU-DET
+path: dataset/NEU-DET
 train: train/images
 val: train/images          # 同一目录，ultralytics 自动从 train 切 20% 做 val
 # test: 暂不指定
