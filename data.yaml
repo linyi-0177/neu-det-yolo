@@ -1,0 +1,19 @@
+# NEU-DET 数据集配置
+# 路径相对于 yaml 所在目录
+
+path: D:\2026\python project\yolo_train\dataset\NEU-DET
+train: train/images
+val: train/images          # 同一目录，ultralytics 自动从 train 切 20% 做 val
+# test: 暂不指定
+
+# 类别数
+nc: 6
+
+# 类别名称（按 YOLO 类别 ID 顺序，0~5）
+names:
+  0: crazing
+  1: inclusion
+  2: patches
+  3: pitted_surface
+  4: rolled-in_scale
+  5: scratches

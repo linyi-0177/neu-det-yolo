@@ -1,0 +1,18 @@
+# NEU-DET 钢材表面缺陷检测 —— 运行环境依赖
+# 本项目实测环境：Windows 10 / Python 3.10 / CUDA 12.6 / RTX 4060 8GB
+#
+# 安装（建议使用 conda 虚拟环境）：
+#   conda create -n cv python=3.10 -y && conda activate cv
+#   pip install -r requirements.txt
+#
+# 注意：torch 的 CUDA 版本需与本机驱动匹配，
+# 若驱动较旧，请到 https://pytorch.org 按实际 CUDA 版本重装 torch / torchvision。
+
+ultralytics==8.4.137
+torch==2.13.0
+torchvision==0.28.0
+opencv-python==5.0.0.93
+numpy==2.2.6
+matplotlib==3.10.9
+pillow==12.3.0
+pyyaml

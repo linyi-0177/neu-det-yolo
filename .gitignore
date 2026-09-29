@@ -1,0 +1,40 @@
+# ===== 数据集与训练产物（体积大，均可重新生成，不入库）=====
+dataset/
+runs/
+weights/
+labels_view/
+view_labels.log
+
+# ===== 模型权重 =====
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ===== 虚拟环境 =====
+.venv/
+venv/
+env/
+ENV/
+.virtualenv/
+conda-meta/
+
+# ===== IDE / 编辑器 =====
+.idea/
+*.swp
+
+# ===== 系统文件 =====
+.DS_Store
+Thumbs.db
+desktop.ini
