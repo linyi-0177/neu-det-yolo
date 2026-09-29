@@ -117,7 +117,7 @@ python train.py
 
 ```python
 model.train(
-    data="data.yaml",
+    data=str(ROOT / "data.yaml"),   # ROOT = 本文件所在目录
     epochs=50,        # 训练轮数
     imgsz=640,        # 输入尺寸（原图 200x200 会上采样到 640）
     batch=16,         # 批大小，8GB 显存可上调至 32
